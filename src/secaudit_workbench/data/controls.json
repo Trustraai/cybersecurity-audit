@@ -1,0 +1,98 @@
+{
+  "modules": {
+    "AIS": "AI Supply Chain",
+    "AGT": "Agent and Tool Security",
+    "RAG": "Retrieval and Vector Store",
+    "LLM": "LLM Application Security",
+    "AIG": "AI Governance and Assurance"
+  },
+  "severity_weights": {
+    "Low": 1,
+    "Medium": 3,
+    "High": 7,
+    "Critical": 20
+  },
+  "opinion_bands": [
+    {
+      "label": "No material exposure identified",
+      "max_risk_pct": 5,
+      "definition": "Weighted risk is at or below 5% of applicable controls, and no Critical-severity finding was confirmed."
+    },
+    {
+      "label": "Exposure identified with findings",
+      "max_risk_pct": 30,
+      "definition": "Weighted risk is between 5% and 30% of applicable controls, or a Critical-severity finding was confirmed at low overall weighted risk."
+    },
+    {
+      "label": "Material exposure identified",
+      "max_risk_pct": 100,
+      "definition": "Weighted risk exceeds 30% of applicable controls, or any Critical-severity finding was confirmed."
+    }
+  ],
+  "controls": [
+    {
+      "id": "SAMPLE-AIS-01",
+      "module": "AIS",
+      "module_name": "AI Supply Chain",
+      "title": "No SBOM component matches a known, actively exploited vulnerability",
+      "severity": "Critical",
+      "tier": 1,
+      "weakness": "TW-AIS-001",
+      "obligation": "Third-party and open-weight model and library dependencies are inventoried and free of known, actively exploited vulnerabilities.",
+      "logic": "Match each SBOM package/version against the warehouse vulnerability set by purl and version range.",
+      "finding_template": "One or more components in {client}'s software bill of materials carry a vulnerability with confirmed exploitation in the wild.",
+      "match": {"tier1": "vulnerability_match", "evidence": "sbom"}
+    },
+    {
+      "id": "SAMPLE-AGT-01",
+      "module": "AGT",
+      "module_name": "Agent and Tool Security",
+      "title": "Every agent tool holds the minimum scope its function requires",
+      "severity": "Critical",
+      "tier": 2,
+      "weakness": "TW-AGT-001",
+      "obligation": "Agent tools are scoped to least privilege rather than broad or administrative access.",
+      "logic": "Every declared agent tool has least_privilege = true in the agent tool manifest.",
+      "finding_template": "One or more agent tools declared by {client} hold broader scope than their function requires.",
+      "match": {"evidence": "agent_tools", "require": {"all": {"field": "least_privilege", "truthy": true}}}
+    },
+    {
+      "id": "SAMPLE-RAG-01",
+      "module": "RAG",
+      "module_name": "Retrieval and Vector Store",
+      "title": "Retrieval enforces tenant isolation at query time",
+      "severity": "Critical",
+      "tier": 2,
+      "weakness": "TW-RAG-001",
+      "obligation": "Vector stores serving more than one tenant filter retrieval results by tenant or principal at query time.",
+      "logic": "Every declared vector store has tenant_isolation = true.",
+      "finding_template": "One or more vector stores declared by {client} do not enforce tenant isolation at query time.",
+      "match": {"evidence": "vector_stores", "require": {"all": {"field": "tenant_isolation", "truthy": true}}}
+    },
+    {
+      "id": "SAMPLE-LLM-01",
+      "module": "LLM",
+      "module_name": "LLM Application Security",
+      "title": "System prompts contain no secrets",
+      "severity": "High",
+      "tier": 2,
+      "weakness": "TW-LLM-001",
+      "obligation": "System prompts hold no credentials, API keys, or security-relevant logic that would matter if disclosed.",
+      "logic": "No entry in the system prompt library is flagged contains_secret.",
+      "finding_template": "One or more system prompts declared by {client} are flagged as containing a secret.",
+      "match": {"evidence": "prompts", "require": {"none": {"field": "contains_secret", "truthy": true}}}
+    },
+    {
+      "id": "SAMPLE-AIG-01",
+      "module": "AIG",
+      "module_name": "AI Governance and Assurance",
+      "title": "AI incidents have a defined response path and named owner",
+      "severity": "Medium",
+      "tier": 3,
+      "weakness": "TW-AIG-001",
+      "obligation": "There is a documented, owned incident response path specific to AI system failures and misuse.",
+      "logic": "Unstructured evidence (policy documents) reviewed by the auditor; no declarative rule applies.",
+      "finding_template": "{client} did not provide evidence of a documented AI incident response path with a named owner."
+    }
+  ]
+}

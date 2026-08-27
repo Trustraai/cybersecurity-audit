@@ -1,0 +1,63 @@
+{
+  "version": "SAMPLE-2026.01",
+  "digest": "d93271d7b4a752abca40fa7fdce5ab9f957b442cc23585928317206163a6a27b",
+  "nodes": [
+    {
+      "id": "TW-AIS-001",
+      "dimension": "weakness",
+      "title": "Unpinned or vulnerable third-party model/library dependency",
+      "aliases": [
+        "OWASP-ML05"
+      ]
+    },
+    {
+      "id": "TW-AGT-001",
+      "dimension": "weakness",
+      "title": "Excessive agent tool scope",
+      "aliases": [
+        "OWASP-LLM08"
+      ]
+    },
+    {
+      "id": "TW-RAG-001",
+      "dimension": "weakness",
+      "title": "Missing tenant isolation in shared retrieval",
+      "aliases": []
+    },
+    {
+      "id": "TW-LLM-001",
+      "dimension": "weakness",
+      "title": "Secret material embedded in a system prompt",
+      "aliases": [
+        "OWASP-LLM07"
+      ]
+    },
+    {
+      "id": "TW-AIG-001",
+      "dimension": "weakness",
+      "title": "No defined AI incident response path",
+      "aliases": []
+    },
+    {
+      "id": "TV-SAMPLE-001",
+      "dimension": "vulnerability",
+      "title": "Sample illustrative vulnerability in sample-vulnerable-lib",
+      "aliases": [
+        "CVE-0000-00001"
+      ],
+      "affects": {
+        "purl": "pkg:pypi/sample-vulnerable-lib",
+        "versions": "<=2.0.0"
+      },
+      "fixed_in": "2.0.1",
+      "kev": true
+    }
+  ],
+  "edges": [
+    {
+      "source": "TW-AIS-001",
+      "target": "TV-SAMPLE-001",
+      "relation": "instance_of"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+[
+  {"id": "tool-crm-write", "name": "crm_write", "least_privilege": false},
+  {"id": "tool-crm-read", "name": "crm_read", "least_privilege": true}
+]

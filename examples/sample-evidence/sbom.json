@@ -1,0 +1,6 @@
+{
+  "components": [
+    {"purl": "pkg:pypi/sample-vulnerable-lib", "version": "1.4.0", "asset": "inference-gateway"},
+    {"purl": "pkg:pypi/sample-safe-lib", "version": "3.2.1", "asset": "inference-gateway"}
+  ]
+}
